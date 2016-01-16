@@ -1,12 +1,24 @@
 {
     "compilerOptions": {
+        "target": "es6",
         "module": "commonjs",
-        "sourceMap": true
-    },
-    "files": [
-        "./typings/tsd.d.ts",
-        "./routes/index.ts",
-        "./db.ts",
-        "./app.ts"
-    ]
+        "sourceMap": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "removeComments": true,
+        "noImplicitAny": false,
+        "out": "./out",
+        "files": [
+            "./typings/tsd.d.ts",
+            // "./routes/index.ts",
+            // "./db.ts",
+            "./src"
+        ]
+        // "exclude": [
+        //     "node_modules",
+        //     "out",
+        //     "logs",
+        //     "web"
+        // ]
+    }
 }

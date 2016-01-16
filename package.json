@@ -6,7 +6,6 @@
     "start": "node index.js",
     "test": "./node_modules/mocha/bin/mocha index.js"
   },
-  "repository": "https://github.com/leekangtaqi/rodos",
   "dependencies": {
     "bluebird": "2.9.34",
     "log4js": "0.6.26",

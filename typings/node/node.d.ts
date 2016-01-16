@@ -113,12 +113,6 @@ declare var Buffer: {
      * @param array The octets to store.
      */
     new (array: any[]): Buffer;
-    /**
-     * Copies the passed {buffer} data onto a new {Buffer} instance.
-     *
-     * @param buffer The buffer to copy.
-     */
-    new (buffer: Buffer): Buffer;
     prototype: Buffer;
     /**
      * Returns true if {obj} is a Buffer
@@ -179,11 +173,9 @@ declare module NodeJS {
         once(event: string, listener: Function): EventEmitter;
         removeListener(event: string, listener: Function): EventEmitter;
         removeAllListeners(event?: string): EventEmitter;
-        setMaxListeners(n: number): EventEmitter;
-        getMaxListeners(): number;
+        setMaxListeners(n: number): void;
         listeners(event: string): Function[];
         emit(event: string, ...args: any[]): boolean;
-        listenerCount(type: string): number;
     }
 
     export interface ReadableStream extends EventEmitter {
@@ -264,7 +256,7 @@ declare module NodeJS {
                 visibility: string;
             };
         };
-        kill(pid:number, signal?: string|number): void;
+        kill(pid: number, signal?: string): void;
         pid: number;
         title: string;
         arch: string;
@@ -401,7 +393,6 @@ interface NodeBuffer {
     writeDoubleLE(value: number, offset: number, noAssert?: boolean): number;
     writeDoubleBE(value: number, offset: number, noAssert?: boolean): number;
     fill(value: any, offset?: number, end?: number): Buffer;
-    indexOf(value: string | number | Buffer, byteOffset?: number): number;
 }
 
 /************************************************
@@ -414,46 +405,32 @@ declare module "buffer" {
 }
 
 declare module "querystring" {
-    export interface StringifyOptions {
-        encodeURIComponent?: Function;
-    }
-
-    export interface ParseOptions {
-        maxKeys?: number;
-        decodeURIComponent?: Function;
-    }
-
-    export function stringify<T>(obj: T, sep?: string, eq?: string, options?: StringifyOptions): string;
-    export function parse(str: string, sep?: string, eq?: string, options?: ParseOptions): any;
-    export function parse<T extends {}>(str: string, sep?: string, eq?: string, options?: ParseOptions): T;
+    export function stringify(obj: any, sep?: string, eq?: string): string;
+    export function parse(str: string, sep?: string, eq?: string, options?: { maxKeys?: number; }): any;
     export function escape(str: string): string;
     export function unescape(str: string): string;
 }
 
 declare module "events" {
     export class EventEmitter implements NodeJS.EventEmitter {
-        static EventEmitter: EventEmitter;
-        static listenerCount(emitter: EventEmitter, event: string): number; // deprecated
-        static defaultMaxListeners: number;
+        static listenerCount(emitter: EventEmitter, event: string): number;
 
         addListener(event: string, listener: Function): EventEmitter;
         on(event: string, listener: Function): EventEmitter;
         once(event: string, listener: Function): EventEmitter;
         removeListener(event: string, listener: Function): EventEmitter;
         removeAllListeners(event?: string): EventEmitter;
-        setMaxListeners(n: number): EventEmitter;
-        getMaxListeners(): number;
+        setMaxListeners(n: number): void;
         listeners(event: string): Function[];
         emit(event: string, ...args: any[]): boolean;
-        listenerCount(type: string): number;
-    }
+   }
 }
 
 declare module "http" {
     import * as events from "events";
     import * as net from "net";
     import * as stream from "stream";
-
+    
     export interface RequestOptions {
         protocol?: string;
         host?: string;
@@ -466,7 +443,7 @@ declare module "http" {
         path?: string;
         headers?: { [key: string]: any };
         auth?: string;
-        agent?: Agent|boolean;
+        agent?: Agent;
     }
 
     export interface Server extends events.EventEmitter {
@@ -497,7 +474,6 @@ declare module "http" {
         writeHead(statusCode: number, headers?: any): void;
         statusCode: number;
         statusMessage: string;
-        headersSent: boolean;
         setHeader(name: string, value: string): void;
         sendDate: boolean;
         getHeader(name: string): string;
@@ -722,29 +698,7 @@ declare module "zlib" {
 }
 
 declare module "os" {
-    export interface CpuInfo {
-        model: string;
-        speed: number;
-        times: {
-            user: number;
-            nice: number;
-            sys: number;
-            idle: number;
-            irq: number;
-        }
-    }
-
-    export interface NetworkInterfaceInfo {
-        address: string;
-        netmask: string;
-        family: string;
-        mac: string;
-        internal: boolean;
-    }
-
     export function tmpdir(): string;
-    export function homedir(): string;
-    export function endianness(): string;
     export function hostname(): string;
     export function type(): string;
     export function platform(): string;
@@ -754,8 +708,8 @@ declare module "os" {
     export function loadavg(): number[];
     export function totalmem(): number;
     export function freemem(): number;
-    export function cpus(): CpuInfo[];
-    export function networkInterfaces(): {[index: string]: NetworkInterfaceInfo[]};
+    export function cpus(): { model: string; speed: number; times: { user: number; nice: number; sys: number; idle: number; irq: number; }; }[];
+    export function networkInterfaces(): any;
     export var EOL: string;
 }
 
@@ -840,49 +794,22 @@ declare module "readline" {
     import * as events from "events";
     import * as stream from "stream";
 
-    export interface Key {
-        sequence?: string;
-        name?: string;
-        ctrl?: boolean;
-        meta?: boolean;
-        shift?: boolean;
-    }
-
     export interface ReadLine extends events.EventEmitter {
         setPrompt(prompt: string): void;
         prompt(preserveCursor?: boolean): void;
-        question(query: string, callback: (answer: string) => void): void;
-        pause(): ReadLine;
-        resume(): ReadLine;
+        question(query: string, callback: Function): void;
+        pause(): void;
+        resume(): void;
         close(): void;
-        write(data: string|Buffer, key?: Key): void;
+        write(data: any, key?: any): void;
     }
-
-    export interface Completer {
-        (line: string): CompleterResult;
-        (line: string, callback: (err: any, result: CompleterResult) => void): any;
-    }
-
-    export interface CompleterResult {
-        completions: string[];
-        line: string;
-    }
-
     export interface ReadLineOptions {
         input: NodeJS.ReadableStream;
-        output?: NodeJS.WritableStream;
-        completer?: Completer;
+        output: NodeJS.WritableStream;
+        completer?: Function;
         terminal?: boolean;
-        historySize?: number;
     }
-
-    export function createInterface(input: NodeJS.ReadableStream, output?: NodeJS.WritableStream, completer?: Completer, terminal?: boolean): ReadLine;
     export function createInterface(options: ReadLineOptions): ReadLine;
-
-    export function cursorTo(stream: NodeJS.WritableStream, x: number, y: number): void;
-    export function moveCursor(stream: NodeJS.WritableStream, dx: number|string, dy: number|string): void;
-    export function clearLine(stream: NodeJS.WritableStream, dir: number): void;
-    export function clearScreenDown(stream: NodeJS.WritableStream): void;
 }
 
 declare module "vm" {
@@ -948,11 +875,7 @@ declare module "child_process" {
     export function fork(modulePath: string, args?: string[], options?: {
         cwd?: string;
         env?: any;
-        execPath?: string;
-        execArgv?: string[];
-        silent?: boolean;
-        uid?: number;
-        gid?: number;
+        encoding?: string;
     }): ChildProcess;
     export function spawnSync(command: string, args?: string[], options?: {
         cwd?: string;
@@ -1580,8 +1503,6 @@ declare module "tls" {
     var CLIENT_RENEG_WINDOW: number;
 
     export interface TlsOptions {
-        host?: string;
-        port?: number;
         pfx?: any;   //string or buffer
         key?: any;   //string or buffer
         passphrase?: string;
@@ -1688,13 +1609,13 @@ declare module "crypto" {
     export function createHash(algorithm: string): Hash;
     export function createHmac(algorithm: string, key: string): Hmac;
     export function createHmac(algorithm: string, key: Buffer): Hmac;
-    export interface Hash {
+    interface Hash {
         update(data: any, input_encoding?: string): Hash;
         digest(encoding: 'buffer'): Buffer;
         digest(encoding: string): any;
         digest(): Buffer;
     }
-    export interface Hmac extends NodeJS.ReadWriteStream {
+    interface Hmac {
         update(data: any, input_encoding?: string): Hmac;
         digest(encoding: 'buffer'): Buffer;
         digest(encoding: string): any;
@@ -1702,7 +1623,7 @@ declare module "crypto" {
     }
     export function createCipher(algorithm: string, password: any): Cipher;
     export function createCipheriv(algorithm: string, key: any, iv: any): Cipher;
-    export interface Cipher {
+    interface Cipher {
         update(data: Buffer): Buffer;
         update(data: string, input_encoding?: string, output_encoding?: string): string;
         final(): Buffer;
@@ -1711,7 +1632,7 @@ declare module "crypto" {
     }
     export function createDecipher(algorithm: string, password: any): Decipher;
     export function createDecipheriv(algorithm: string, key: any, iv: any): Decipher;
-    export interface Decipher {
+    interface Decipher {
         update(data: Buffer): Buffer;
         update(data: string, input_encoding?: string, output_encoding?: string): string;
         final(): Buffer;
@@ -1719,18 +1640,18 @@ declare module "crypto" {
         setAutoPadding(auto_padding: boolean): void;
     }
     export function createSign(algorithm: string): Signer;
-    export interface Signer extends NodeJS.WritableStream {
+    interface Signer extends NodeJS.WritableStream {
         update(data: any): void;
         sign(private_key: string, output_format: string): string;
     }
     export function createVerify(algorith: string): Verify;
-    export interface Verify extends NodeJS.WritableStream {
+    interface Verify extends NodeJS.WritableStream {
         update(data: any): void;
         verify(object: string, signature: string, signature_format?: string): boolean;
     }
     export function createDiffieHellman(prime_length: number): DiffieHellman;
     export function createDiffieHellman(prime: number, encoding?: string): DiffieHellman;
-    export interface DiffieHellman {
+    interface DiffieHellman {
         generateKeys(encoding?: string): string;
         computeSecret(other_public_key: string, input_encoding?: string, output_encoding?: string): string;
         getPrime(encoding?: string): string;
@@ -1741,10 +1662,10 @@ declare module "crypto" {
         setPrivateKey(public_key: string, encoding?: string): void;
     }
     export function getDiffieHellman(group_name: string): DiffieHellman;
-    export function pbkdf2(password: string|Buffer, salt: string|Buffer, iterations: number, keylen: number, callback: (err: Error, derivedKey: Buffer) => any): void;
-    export function pbkdf2(password: string|Buffer, salt: string|Buffer, iterations: number, keylen: number, digest: string, callback: (err: Error, derivedKey: Buffer) => any): void;
-    export function pbkdf2Sync(password: string|Buffer, salt: string|Buffer, iterations: number, keylen: number) : Buffer;
-    export function pbkdf2Sync(password: string|Buffer, salt: string|Buffer, iterations: number, keylen: number, digest: string) : Buffer;
+    export function pbkdf2(password: string, salt: string, iterations: number, keylen: number, callback: (err: Error, derivedKey: Buffer) => any): void;
+    export function pbkdf2(password: string, salt: string, iterations: number, keylen: number, digest: string, callback: (err: Error, derivedKey: Buffer) => any): void;
+    export function pbkdf2Sync(password: string, salt: string, iterations: number, keylen: number) : Buffer;
+    export function pbkdf2Sync(password: string, salt: string, iterations: number, keylen: number, digest: string) : Buffer;
     export function randomBytes(size: number): Buffer;
     export function randomBytes(size: number, callback: (err: Error, buf: Buffer) =>void ): void;
     export function pseudoRandomBytes(size: number): Buffer;
@@ -1754,7 +1675,7 @@ declare module "crypto" {
 declare module "stream" {
     import * as events from "events";
 
-    export class Stream extends events.EventEmitter {
+    export interface Stream extends events.EventEmitter {
         pipe<T extends NodeJS.WritableStream>(destination: T, options?: { end?: boolean; }): T;
     }
 
@@ -1887,8 +1808,6 @@ declare module "assert" {
         export function notDeepEqual(acutal: any, expected: any, message?: string): void;
         export function strictEqual(actual: any, expected: any, message?: string): void;
         export function notStrictEqual(actual: any, expected: any, message?: string): void;
-        export function deepStrictEqual(actual: any, expected: any, message?: string): void;
-        export function notDeepStrictEqual(actual: any, expected: any, message?: string): void;
         export var throws: {
             (block: Function, message?: string): void;
             (block: Function, error: Function, message?: string): void;
@@ -1916,12 +1835,10 @@ declare module "tty" {
     export interface ReadStream extends net.Socket {
         isRaw: boolean;
         setRawMode(mode: boolean): void;
-        isTTY: boolean;
     }
     export interface WriteStream extends net.Socket {
         columns: number;
         rows: number;
-        isTTY: boolean;
     }
 }
 
