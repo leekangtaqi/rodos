@@ -7,18 +7,10 @@
         "experimentalDecorators": true,
         "removeComments": true,
         "noImplicitAny": false,
-        "out": "./out",
-        "files": [
-            "./typings/tsd.d.ts",
-            // "./routes/index.ts",
-            // "./db.ts",
-            "./src"
-        ]
-        // "exclude": [
-        //     "node_modules",
-        //     "out",
-        //     "logs",
-        //     "web"
-        // ]
-    }
+        "outDir": "build"
+    },
+    "exclude": [
+        "build",
+        "node_modules"
+    ]
 }

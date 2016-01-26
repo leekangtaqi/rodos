@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>MyWebSite</title>
+    <script src="web/node_modules/angular2/bundles/angular2-polyfills.js"></script>
+    <script src="web/node_modules/systemjs/dist/system.src.js"></script>
+    <script src="web/node_modules/rxjs/bundles/Rx.js"></script>
+    <script src="web/node_modules/angular2/bundles/angular2.dev.js"></script>
+</head>
+<body style="overflow: hidden !important;background: #eee">
+    Hello world. {{username}}
+    <script>
+        System.config({
+            packages: {
+                app: {
+                    format: 'register',
+                    defaultExtension: 'js'
+                }
+            }
+        });
+        System.import('web/build/src/boot')
+                .then(null, console.error.bind(console));
+    </script>
+    <my-app>Loading...</my-app>
+</body>
+</html>
