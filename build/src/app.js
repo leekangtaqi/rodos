@@ -8,7 +8,7 @@ var swig = require('swig');
 var path = require('path');
 var serverStatic = require('serve-static');
 var app = express();
-app.set('views', __dirname + '/views');
+app.set('views', path.join(__dirname, '../../src/views'));
 app.set('view engine', 'html');
 app.set('view options', { layout: false });
 app.engine('html', swig.renderFile);
@@ -25,4 +25,3 @@ if (env === 'development') {
 app.listen(3000, function () {
     console.log("Demo Express server listening on port %d in %s mode", 3000, app.settings.env);
 });
-//# sourceMappingURL=app.js.map

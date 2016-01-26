@@ -5,4 +5,3 @@ function index(app) {
     modulesControllers.index(app);
 }
 exports.index = index;
-//# sourceMappingURL=index.js.map

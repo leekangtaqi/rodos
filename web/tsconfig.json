@@ -1,17 +1,14 @@
 {
     "compilerOptions": {
         "target": "es6",
-        "module": "commonjs",
+        "module": "es2015",
         "sourceMap": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "removeComments": true,
-        "noImplicitAny": false,
-        "outDir": "build"
+        "noImplicitAny": false
     },
     "exclude": [
-        "build",
-        "web",
-        "node_modules"
+        "node_modules/angular2/**/*_spec.js"
     ]
 }

@@ -10,7 +10,7 @@ import path = require('path');
 import serverStatic = require('serve-static');
 
 var app = express();
-app.set('views', __dirname + '/views');
+app.set('views', path.join( __dirname, '../../src/views'));
 app.set('view engine', 'html');
 app.set('view options', { layout: false });
 app.engine('html', swig.renderFile);

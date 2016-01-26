@@ -5,4 +5,3 @@ function dispatch(app) {
 }
 exports.dispatch = dispatch;
 ;
-//# sourceMappingURL=index.js.map
