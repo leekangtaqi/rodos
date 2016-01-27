@@ -1,14 +1,15 @@
 {
-    "compilerOptions": {
-        "target": "es6",
-        "module": "es2015",
-        "sourceMap": true,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "removeComments": true,
-        "noImplicitAny": false
-    },
-    "exclude": [
-        "node_modules/angular2/**/*_spec.js"
-    ]
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "system",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "removeComments": false,
+    "noImplicitAny": false
+  },
+  "exclude": [
+    "node_modules"
+  ]
 }

@@ -1,2 +1,2 @@
 /// <reference path="./typings/tsd.d.ts" />
-require('./src/app');
+require('./src');

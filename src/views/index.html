@@ -10,18 +10,19 @@
     <script src="web/node_modules/rxjs/bundles/Rx.js"></script>
     <script src="web/node_modules/angular2/bundles/angular2.dev.js"></script>      
 </head>
-<body style="overflow: hidden !important;background: #eee">
-<script>
-    System.config({
-        packages: {        
-            app: {
-            format: 'register',
-            defaultExtension: 'js'
-            }
-        }
-    });
-    System.import('web/build/src/boot.js')
-        .then(null, console.error.bind(console));
-</script>
+<body>
+    <my-app></my-app>
+    <script>
+        System.config({
+            paths: {
+                'boot': 'web/build/src/boot',
+                'angular2/*': 'web/node_modules/angular2/*',
+                'rxjs/*': 'web/node_modules/rxjs/*'    
+            },
+            defaultJSExtensions: true
+        });
+        System.import('boot')
+            .then(null, console.error.bind(console));
+    </script>
 </body>
 </html>

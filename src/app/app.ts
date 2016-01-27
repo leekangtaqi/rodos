@@ -1,16 +1,16 @@
-/// <reference path="../typings/tsd.d.ts" />
+/// <reference path="../../typings/tsd.d.ts" />
 "use strict";
 import express = require('express');
 import bodyParser = require('body-parser');
 import methodOverride = require('method-override');
 import errorHandler = require('errorhandler');
-import dispatcher = require('./router');
+import dispatcher = require('../router');
 import swig = require('swig');
 import path = require('path');
 import serverStatic = require('serve-static');
 
-var app = express();
-app.set('views', path.join( __dirname, '../../src/views'));
+export var app = express();
+app.set('views', path.join( __dirname, '../../../src/views'));
 app.set('view engine', 'html');
 app.set('view options', { layout: false });
 app.engine('html', swig.renderFile);
@@ -18,8 +18,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(methodOverride());
 
-app.use('/public', serverStatic((path.join(__dirname + '../../../public'))));
-app.use('/web', serverStatic((path.join(__dirname + '../../../web'))));
+app.use('/public', serverStatic((path.join(__dirname + '../../../../public'))));
+app.use('/web', serverStatic((path.join(__dirname + '../../../../web'))));
 
 dispatcher.dispatch(app); 
 

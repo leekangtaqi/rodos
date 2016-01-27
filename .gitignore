@@ -125,5 +125,5 @@ node_modules
 .lock-wscript
 
 #for js compiled
-.build
-.web/build
+build
+web/build

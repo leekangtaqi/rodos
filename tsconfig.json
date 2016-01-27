@@ -9,6 +9,9 @@
         "noImplicitAny": false,
         "outDir": "build"
     },
+    "filesGlob": [
+        "typings/tsd.d.ts"
+    ],
     "exclude": [
         "build",
         "web",
