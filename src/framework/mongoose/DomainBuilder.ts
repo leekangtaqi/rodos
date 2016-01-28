@@ -1,5 +1,6 @@
 import DomainBuilder = require('./SchemaBuilder');
+import createOn = require('./CreateOn');
  
-DomainBuilder.plug(require('./CreateOn').CreateOn, true);
+DomainBuilder.plug(createOn, true);
 
 export = DomainBuilder;

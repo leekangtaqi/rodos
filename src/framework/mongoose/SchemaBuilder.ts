@@ -1,8 +1,6 @@
-/// <reference path="../../../typings/tsd.d.ts" />
-
+"use strict";
 import mongoose = require('mongoose');
-const SchemaPlugin = require('./SchemaPlugin').SchemaPlugin;
-const Schema = mongoose.Schema;
+import SchemaPlugin = require('./SchemaPlugin');
 
 export = class SchemaBuilder{
     private name: string;
@@ -10,14 +8,14 @@ export = class SchemaBuilder{
     private properties: any[];
     private usePlugins: any[];
     
-    static BaseOptions = {
+    public static BaseOptions = {
         strict: true,
         toJSON: { getter: true, virtuals: true },
         toObject: { getter: true, virtuals: true }    
     };
-    static BasicPlugins = [];
-    static plugins = {};
-    static plug(plugin, basicPlugin: boolean){
+    public static BasicPlugins = [];
+    public static plugins = {};
+    public static plug(plugin, basicPlugin: boolean){
         plugin.register(SchemaBuilder);
         if(basicPlugin){
             SchemaBuilder.BasicPlugins.push(plugin);
@@ -49,5 +47,25 @@ export = class SchemaBuilder{
         this.withBasicProperties();
         return this;
     };
-    public build(){};
+    public build(){
+        var schema: mongoose.Schema = new mongoose.Schema(this.properties, this.options);
+        schema['name'] = this.name;
+        schema['model'] = function(register){
+            var model = null;
+            if(register){
+                model = mongoose.model(this.name, this);
+            }
+            else{
+                model = mongoose.model(this.name);
+            }
+            return model;
+        };
+        for(var prop in this.usePlugins){
+            if(this.properties[prop]){
+                throw new Error('property ' + prop + ' is duplicatedly defined and conflicts with Plugin ' + SchemaBuilder.plugins[prop].name);
+            }
+            SchemaBuilder.plugins[prop].use(schema, this.usePlugins[prop]);
+        }
+        return schema;
+    };
 }

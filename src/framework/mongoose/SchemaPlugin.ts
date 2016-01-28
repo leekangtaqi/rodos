@@ -1,3 +1,4 @@
+"use strict";
 export = class SchemaPlugin{
     protected name: string;
     protected prop: string;
@@ -18,7 +19,5 @@ export = class SchemaPlugin{
         };
     };
     
-    use(){
-        throw new Error('the method is a abstract method, must be overwrite')
-    };
+    use(schema: any, options: any){};
 }
