@@ -1,4 +1,3 @@
-/// <reference path="../../typings/tsd.d.ts" />
 "use strict";
 import express = require('express');
 import bodyParser = require('body-parser');
@@ -28,6 +27,6 @@ if (env === 'development') {
     app.use(errorHandler());
 }
 app.listen(3000, function(){
-    console.log("Demo Express server listening on port %d in %s mode", 3000, app.settings.env);
+    console.log("Express server listening on port %d in %s mode", 3000, app.settings.env);
 });
 

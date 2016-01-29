@@ -19,6 +19,7 @@
     "redis": "0.12.1",
     "serve-static": "*",
     "swig": "*",
+    "typescript": "^1.9.0-dev.20160129",
     "underscore": "1.8.3"
   },
   "devDependencies": {

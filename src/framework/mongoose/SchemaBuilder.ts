@@ -1,7 +1,15 @@
 "use strict";
 import mongoose = require('mongoose');
 import SchemaPlugin = require('./SchemaPlugin');
-import _ = require('underscore');
+
+//static properties
+var _BasicPlugins = [];
+var _BaseOptions = {
+    strict: true,
+    toJSON: { getter: true, virtuals: true },
+    toObject: { getter: true, virtuals: true } 
+};
+var _plugins = {};
 
 export = class SchemaBuilder{
     private name: string;
@@ -9,25 +17,38 @@ export = class SchemaBuilder{
     private properties: any[];
     private usePlugins: any[];
     
-    public static BaseOptions = {
-        strict: true,
-        toJSON: { getter: true, virtuals: true },
-        toObject: { getter: true, virtuals: true }    
-    };
-    public static BasicPlugins = [];
-    public static plugins = {};
-    public static plug(plugin, basicPlugin: boolean){
-        plugin.register(SchemaBuilder);
-        if(basicPlugin){
-            SchemaBuilder.BasicPlugins.push(plugin);
-        }
-    };
-    
     constructor(name: string){
         this.name = name;
         this.options = [];
         this.properties = [];
         this.usePlugins = [];
+    };
+    
+    public static get BaseOptions(){
+        return {
+            strict: true,
+            toJSON: { getter: true, virtuals: true },
+            toObject: { getter: true, virtuals: true } 
+        };
+    }
+    
+    public static set BaseOptions(value){
+        _BaseOptions = value;
+    }
+    
+    public static get BasicPlugins(){
+        return _BasicPlugins;
+    }
+    
+    public static get plugins(){
+        return _plugins;
+    }
+    
+    public static plug(plugin, basicPlugin: boolean){
+        plugin.register(SchemaBuilder);
+        if(basicPlugin){
+            SchemaBuilder.BasicPlugins.push(plugin);
+        }
     };
     //factory method
     static i(name: string){

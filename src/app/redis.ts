@@ -6,9 +6,6 @@ var logger = loggerModule.logger;
 var DEFAULT_NAME = 'default';
 var clients = {};
 
-/*
- * logging methods
- */
 var infolog = function (msg) {
     return function() {
         logger.info(msg, arguments);

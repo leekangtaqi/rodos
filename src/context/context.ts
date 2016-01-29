@@ -1,3 +1,4 @@
+"use strict";
 class Context {
     settings: any = {};
     redis: any = {};
