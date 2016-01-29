@@ -10,3 +10,4 @@
 /// <reference path="bluebird/bluebird.d.ts" />
 /// <reference path="swig/swig.d.ts" />
 /// <reference path="redis/redis.d.ts" />
+/// <reference path="underscore/underscore.d.ts" />

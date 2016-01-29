@@ -6,7 +6,7 @@ class CreateOn extends SchemaPlugin{
     prop: string;
     type: any;
     
-    constructor(o: SchemaPlugin){
+    constructor(o){
         super(o);
     };
     use(schema, options){

@@ -6,7 +6,9 @@ export = class SchemaPlugin{
     protected methodName: string;
      
     constructor(o: SchemaPlugin){
-        Object.assign(this, o);
+        this.name = o.name;
+        this.prop = o.prop;
+        this.type = o.type;
         this.methodName = 'with' + this.name.charAt(0).toUpperCase() + this.name.slice(1);
     }
     

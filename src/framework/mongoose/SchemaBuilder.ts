@@ -1,6 +1,7 @@
 "use strict";
 import mongoose = require('mongoose');
 import SchemaPlugin = require('./SchemaPlugin');
+import _ = require('underscore');
 
 export = class SchemaBuilder{
     private name: string;
@@ -33,7 +34,7 @@ export = class SchemaBuilder{
         return new SchemaBuilder(name);
     };
     public withBasicOptions(){
-        Object.assign(this.options, SchemaBuilder.BaseOptions);
+        _.extend(this.options, SchemaBuilder.BaseOptions);
         return this;
     };
     public withBasicProperties(){
