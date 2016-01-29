@@ -1,7 +1,7 @@
 "use strict";
 import SchemaPlugin  = require('./SchemaPlugin');
 
-class CreateOn extends SchemaPlugin{
+class CreatedOn extends SchemaPlugin{
     name: string;
     prop: string;
     type: any;
@@ -13,19 +13,19 @@ class CreateOn extends SchemaPlugin{
         var path = {};
         path[this.prop] = this.type;
         schema.add(path);
-        schema.pre('save', (next)=>{
-            this['autoCreatedOn'].call(this);
+        schema.pre('save', function(next){
+            console.log(this);
+            this['autoCreatedOn']();
             next();
-        });
-        const prop = this.prop; 
-        schema.method('autoCreatedOn', (time?: Date)=>{
+        }, this);
+        schema.method('autoCreatedOn', function(time?: Date){
             !time && (time = new Date()); 
-            return this[prop] = time;
+            return this[this.prop] = time;
         });    
     }
 }
-export = new CreateOn({
-    name: 'createOn',
+export = new CreatedOn({
+    name: 'createdOn',
     prop: 'crtOn',
     type: { 
         type: Date    

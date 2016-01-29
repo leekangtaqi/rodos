@@ -29,8 +29,8 @@ export = class SchemaBuilder{
         this.properties = [];
         this.usePlugins = [];
     };
-    
-    public i(name: string){
+    //factory method
+    static i(name: string){
         return new SchemaBuilder(name);
     };
     public withBasicOptions(){
@@ -41,6 +41,10 @@ export = class SchemaBuilder{
         SchemaBuilder.BasicPlugins.forEach((plugin, index)=>{
             this.usePlugins[plugin.prop] = null;
         }, this);
+        return this;
+    };
+    public withProperties(properties){
+        _.extend(this.properties, properties);
         return this;
     };
     public withBasis(){

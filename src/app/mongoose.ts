@@ -1,6 +1,6 @@
 import settings = require('../settings');
-var mongoose = require('mongoose');
-var logger = require('./logging').logger;
+import mongoose = require('mongoose');
+import logger = require('./logging');
 
 var makeUrl = (mongo)=>{
     const authPart = mongo.username + ':' + mongo.password + '@';
@@ -8,15 +8,15 @@ var makeUrl = (mongo)=>{
     return 'mongodb://' + auth + mongo.host + ':' + mongo.port + '/' + mongo.db;
 };
 
-var url = makeUrl(settings);
+var url = makeUrl(settings.mongo);
 var options = {};
 
 mongoose.connect(url, options, (err)=>{
-    logger.info('Mongoose is connected to ' + url);
+    logger.logger.info('Mongoose is connected to ' + url);
 });
 mongoose.connection.on('error', (err)=>{
-    logger.error('Mongoose error happens:' + err);
+    logger.logger.error('Mongoose error happens:' + err);
 });
 
-exports = mongoose;
+export = mongoose;
 

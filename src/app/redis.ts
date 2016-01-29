@@ -1,7 +1,8 @@
 import fullSettings = require('../settings');
 import redis = require('redis');
+import loggerModule = require('./logging');
 var settings = fullSettings.redis;
-var logger = require('./logging').logger;
+var logger = loggerModule.logger;
 var DEFAULT_NAME = 'default';
 var clients = {};
 

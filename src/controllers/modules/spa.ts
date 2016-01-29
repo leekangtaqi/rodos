@@ -1,4 +1,6 @@
 import express = require('express');
+import context = require('../../context/context');
+
 var router = express.Router();
 export function index(){
     router.get('/', (req, res, next)=>{
