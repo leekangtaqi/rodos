@@ -16,6 +16,7 @@ export class ExpressServer implements Server {
             throw new Error('Express Router does not have such action ' + actionType);
         }
         router[actionType](route, executeCallback);
+        this.express.use(router);
     }
     getParamFromRequest(request: e.Request, paramName: string, paramType: string): void{
         switch (paramType) {

@@ -3,7 +3,7 @@ import express = require('express');
 import userController = require('./user');
 export function index(app){
     app.use('/api', [
-        require('./user').index(userController),
+        require('./user').index(),
     ])
     @Controller
     class UserController{
