@@ -1,3 +1,3 @@
 # Rodos
-## A skeleton Web project
-### Base on Typescript and Angular2
+## A skeleton Nodejs and Angular2 Web project
+### Base on Typescript
