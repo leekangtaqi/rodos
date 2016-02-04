@@ -7,8 +7,12 @@ import dispatcher = require('../router');
 import swig = require('swig');
 import path = require('path');
 import serverStatic = require('serve-static');
+import {registerActionsInExpressApp} from '../framework/rodos/Factory';
 
 export var app = express();
+
+registerActionsInExpressApp(app, [path.join(__dirname, '../controllers')]);
+
 app.set('views', path.join( __dirname, '../../../src/views'));
 app.set('view engine', 'html');
 app.set('view options', { layout: false });
@@ -19,8 +23,6 @@ app.use(methodOverride());
 
 app.use('/public', serverStatic((path.join(__dirname + '../../../../public'))));
 app.use('/web', serverStatic((path.join(__dirname + '../../../../web'))));
-
-dispatcher.dispatch(app); 
 
 var env = process.env.NODE_ENV || 'development';
 if (env === 'development') {

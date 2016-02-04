@@ -11,3 +11,4 @@
 /// <reference path="swig/swig.d.ts" />
 /// <reference path="redis/redis.d.ts" />
 /// <reference path="underscore/underscore.d.ts" />
+/// <reference path="koa/koa.d.ts" />

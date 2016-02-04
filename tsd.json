@@ -18,7 +18,7 @@
       "commit": "fc341765ebbb04b7109981a25dced01f488f4d94"
     },
     "node/node.d.ts": {
-      "commit": "86dbea8fc37d9473fee465da4f0a21bea4f8cbd9"
+      "commit": "717a5fdb079f8dd7c19f1b22f7f656dd990f0ccf"
     },
     "method-override/method-override.d.ts": {
       "commit": "fc341765ebbb04b7109981a25dced01f488f4d94"
@@ -43,6 +43,9 @@
     },
     "underscore/underscore.d.ts": {
       "commit": "86dbea8fc37d9473fee465da4f0a21bea4f8cbd9"
+    },
+    "koa/koa.d.ts": {
+      "commit": "717a5fdb079f8dd7c19f1b22f7f656dd990f0ccf"
     }
   }
 }

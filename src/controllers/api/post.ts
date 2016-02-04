@@ -7,3 +7,17 @@ export function index(router){
     })
     return router;
 }
+function log(t, p, d){
+    
+}
+// @Controller
+// class PostController{
+//     @route({path: '/_:id', method: 'post'})
+//     @log
+//     getUserById(id){
+//         //get user from db
+//         this.body = user;
+//     }
+    
+    
+// }
