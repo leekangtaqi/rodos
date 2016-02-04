@@ -1,3 +1,4 @@
+"use strict";
 export interface ResponsePropertyMetadata{
     object: Object,
     method: string,

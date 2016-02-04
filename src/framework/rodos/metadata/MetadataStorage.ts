@@ -6,11 +6,11 @@ import {ParamMetadata} from './ParamMetadata';
 import {ResponsePropertyMetadata} from './ResponsePropertyMetadata';
 
 class MetadataStorage{
-    private _controllerMetadatas: ControllerMetadata[];
-    private _actionMetadatas: ActionMetadata[];
-    private _middlewareMetadatas: MiddlewareMetadata[];
-    private _paramMetadatas: ParamMetadata[];
-    private _responsePropertyMetadatas: ResponsePropertyMetadata[];
+    private _controllerMetadatas: ControllerMetadata[] = [];
+    private _actionMetadatas: ActionMetadata[] = [];
+    private _middlewareMetadatas: MiddlewareMetadata[] = [];
+    private _paramMetadatas: ParamMetadata[] = [];
+    private _responsePropertyMetadatas: ResponsePropertyMetadata[] = [];
     
     get controllerMetadatas(): ControllerMetadata[]{
         return this._controllerMetadatas;

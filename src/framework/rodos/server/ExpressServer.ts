@@ -11,6 +11,7 @@ export class ExpressServer implements Server {
     }
     registerAction(router: any,route: string|RegExp, actionType: string, executeCallback: (req: any, res: any)=> any, middlewares?: Function[]){
         middlewares && middlewares.forEach(fn => router.use(fn));
+        actionType = actionType.toLowerCase();
         if(!router[actionType]){
             throw new Error('Express Router does not have such action ' + actionType);
         }

@@ -1,3 +1,4 @@
+"use strict";
 import {Controller, Render, Get} from '../framework/rodos/Decorators';
 import express = require('express');
 

@@ -1,3 +1,4 @@
+"use strict";
 import "reflect-metadata";
 import {ActionOptions, ActionType} from './metadata/ActionMetadata';
 import {ParamType} from './metadata/ParamMetadata';

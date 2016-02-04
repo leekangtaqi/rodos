@@ -1,3 +1,4 @@
+"use strict";
 /**
  * Controller metadata used to storage information about registered controller.
  */

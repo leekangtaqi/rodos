@@ -1,3 +1,4 @@
+"use strict";
 /**
  * Options used to send to framework result handlers.
  */

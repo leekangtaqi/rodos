@@ -1,3 +1,4 @@
+"use strict";
 import {DispatcherRunner} from './DispatcherRunner';
 import {ExpressServer} from './server/ExpressServer';
 
