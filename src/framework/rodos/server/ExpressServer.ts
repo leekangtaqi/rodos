@@ -52,7 +52,6 @@ export class ExpressServer implements Server {
         if(options.content){
             if(options.renderedTemplate){
                 const result = options.content && options.content instanceof Object ? options.content : {};
-                console.warn(result);
                 this.express.render(options.renderedTemplate, result, (err, html)=>{
                     if(err && options.asJson){
                         response.json(err);
@@ -63,18 +62,23 @@ export class ExpressServer implements Server {
                     else if(html){
                         response.send(html);
                     }
+                    response.end();
                 })
+            }else{
+                if(options.redirect){
+                    response.redirect(options.redirect);
+                }
+                else if(options.asJson){
+                    response.json(options.content);
+                }
+                else{
+                    response.send(options.content);
+                }
+                response.end();
             }
-            else if(options.redirect){
-                response.redirect(options.redirect);
-            }
-            else if(options.asJson){
-                response.json(options.content);
-            }
-            else{
-                response.send(options.content);
-            }
+            
+        }else{
+            response.end();
         }
-        response.end();
     }
 }

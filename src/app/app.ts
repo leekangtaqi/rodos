@@ -13,6 +13,7 @@ declare var require;
 export var app = express();
 
 require('../controllers/UserController');
+require('../controllers/SpaController');
 registerActionsInExpressApp(app, [path.join(__dirname, '../controllers')]);
 
 app.set('views', path.join( __dirname, '../../../src/views'));

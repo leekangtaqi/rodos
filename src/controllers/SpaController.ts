@@ -2,12 +2,13 @@
 import {Controller, Render, Get} from '../framework/rodos/Decorators';
 import express = require('express');
 
-@Controller('/api')
-class UserController{
+@Controller('/')
+class SpaController{
     constructor(){};
-    @Get('/', {jsonResponse: true})
+    @Get('/')
+    @Render('index')
     async getUserById(){
-        return {name: '111'}
+        return {name: 'Hello World'}
     }
 }
 
