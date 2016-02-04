@@ -32,12 +32,16 @@ export class ExpressServer implements Server {
     }
     handleSuccess(options: ResultHandleOptions){
         var response: e.Response = options.response;
-        response.status(options.successHttpCode);
+        if(options.successHttpCode){
+            response.status(options.successHttpCode);            
+        }
         this.handleResult(options);
     }
     handleError(options: ResultHandleOptions){
         var response: e.Response = options.response;
-        response.status(options.errorHttpCode);
+        if(options.errorHttpCode){
+            response.status(options.errorHttpCode);    
+        }
         this.handleResult(options);
     }
     handleResult(options: ResultHandleOptions){
@@ -48,6 +52,7 @@ export class ExpressServer implements Server {
         if(options.content){
             if(options.renderedTemplate){
                 const result = options.content && options.content instanceof Object ? options.content : {};
+                console.warn(result);
                 this.express.render(options.renderedTemplate, result, (err, html)=>{
                     if(err && options.asJson){
                         response.json(err);

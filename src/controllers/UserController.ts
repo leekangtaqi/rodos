@@ -8,7 +8,7 @@ class UserController{
     @Get('/user')
     @Render('index')
     async getUserById(){
-        return '111'
+        return {name: '111'}
     }
 }
 
